@@ -1,11 +1,12 @@
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
   name: Test
-  description: Just a Test
+  description: Just a Testi
+  annotations:
+    github.com/project-slug: jsmithedin/test-repo
 spec:
-  type: openapi
-  lifecycle: production
-  owner: Jamie Smith
-  definition:
-    $text: https://github.com/jsmithedin/test-repo/blob/main/openapi.json
+  type: other
+  lifecycle: unkown
+    #  definition:
+    #$text: https://github.com/jsmithedin/test-repo/blob/main/openapi.json
