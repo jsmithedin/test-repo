@@ -9,5 +9,5 @@ spec:
   type: other
   lifecycle: unkown
   owner: foo
-    #  definition:
-    #$text: https://github.com/jsmithedin/test-repo/blob/main/openapi.json
+  definition:
+    $text: https://github.com/jsmithedin/test-repo/blob/main/openapi.json
