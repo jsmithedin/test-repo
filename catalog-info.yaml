@@ -4,6 +4,7 @@ metadata:
   name: Test
   description: Just a Testi
   annotations:
+    backstage.io/techdocs-ref: value
     github.com/project-slug: jsmithedin/test-repo
 spec:
   type: other
