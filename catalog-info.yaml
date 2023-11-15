@@ -7,7 +7,7 @@ metadata:
     backstage.io/techdocs-ref: value
     github.com/project-slug: jsmithedin/test-repo
 spec:
-  type: other
+  type: openapi
   lifecycle: unkown
   owner: foo
   definition:
