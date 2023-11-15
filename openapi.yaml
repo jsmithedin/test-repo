@@ -1,0 +1,428 @@
+openapi: 3.1.0
+info:
+  title: FastAPI
+  version: 0.1.0
+paths:
+  /v1/hyperamp:
+    post:
+      tags:
+      - Hyperamp
+      summary: Create Hyperamp
+      operationId: create_hyperamp_v1_hyperamp_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HyperampSchemaIn'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HyperampSchemaOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/hyperamp/{customer_id}/generate_lld:
+    post:
+      tags:
+      - Hyperamp
+      - LLD
+      summary: Generate Lld
+      operationId: generate_lld_v1_hyperamp__customer_id__generate_lld_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Customer Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LldGenerateSchema'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HyperampSchemaOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/hyperamp/{customer_id}:
+    patch:
+      tags:
+      - Hyperamp
+      summary: Update Hyperamp
+      operationId: update_hyperamp_v1_hyperamp__customer_id__patch
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Customer Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HyperampSchemaUpdate'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HyperampSchemaOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - Hyperamp
+      summary: Get Hyperamp
+      operationId: get_hyperamp_v1_hyperamp__customer_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Customer Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HyperampSchemaOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/hyperamp/:
+    get:
+      tags:
+      - Hyperamp
+      - Master Password
+      summary: List Hyperamps
+      operationId: list_hyperamps_v1_hyperamp__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HyperampSchemaListOut'
+      security:
+      - HTTPBearer: []
+  /v1/hyperamp/{customer_id}/access_status:
+    get:
+      tags:
+      - Hyperamp
+      summary: Get Access Status
+      operationId: get_access_status_v1_hyperamp__customer_id__access_status_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Customer Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HyperampAWSStatusOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/hyperamp/{customer_id}/start_mgn:
+    post:
+      tags:
+      - Hyperamp
+      - MGN
+      summary: Start Mgn
+      operationId: start_mgn_v1_hyperamp__customer_id__start_mgn_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Customer Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HyperampSchemaOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/hyperamps/check_all_access_status:
+    post:
+      tags:
+      - Hyperamp
+      - Service Account
+      summary: Get All Access Status
+      operationId: get_all_access_status_v1_hyperamps_check_all_access_status_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HyperampAWSStatusOut:
+      properties:
+        connection_successful:
+          type: boolean
+          title: Connection Successful
+        message:
+          type: string
+          title: Message
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - connection_successful
+      - message
+      - updated_at
+      title: HyperampAWSStatusOut
+    HyperampSchemaIn:
+      properties:
+        customer_id:
+          type: integer
+          title: Customer Id
+        machine_group:
+          type: string
+          title: Machine Group
+        customer_name:
+          type: string
+          title: Customer Name
+        application_name:
+          type: string
+          title: Application Name
+        application_id:
+          type: integer
+          title: Application Id
+        target_region:
+          type: string
+          title: Target Region
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          default: created
+        lld_ref:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Lld Ref
+        aws_account_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Account Id
+      type: object
+      required:
+      - customer_id
+      - machine_group
+      - customer_name
+      - application_name
+      - application_id
+      - target_region
+      title: HyperampSchemaIn
+    HyperampSchemaListOut:
+      properties:
+        count:
+          type: integer
+          title: Count
+        data:
+          items:
+            $ref: '#/components/schemas/HyperampSchemaOut'
+          type: array
+          title: Data
+      type: object
+      required:
+      - count
+      - data
+      title: HyperampSchemaListOut
+    HyperampSchemaOut:
+      properties:
+        customer_id:
+          type: integer
+          title: Customer Id
+        machine_group:
+          type: string
+          title: Machine Group
+        customer_name:
+          type: string
+          title: Customer Name
+        application_name:
+          type: string
+          title: Application Name
+        application_id:
+          type: integer
+          title: Application Id
+        target_region:
+          type: string
+          title: Target Region
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          default: created
+        lld_ref:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Lld Ref
+        aws_account_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Account Id
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        lld_generated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Lld Generated At
+      type: object
+      required:
+      - customer_id
+      - machine_group
+      - customer_name
+      - application_name
+      - application_id
+      - target_region
+      - status
+      - lld_ref
+      - aws_account_id
+      - updated_at
+      - created_at
+      - lld_generated_at
+      title: HyperampSchemaOut
+    HyperampSchemaUpdate:
+      properties:
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/Status'
+          - type: 'null'
+        lld_ref:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Lld Ref
+        aws_account_id:
+          anyOf:
+          - type: string
+            pattern: ^\d{12}$
+          - type: 'null'
+          title: Aws Account Id
+      type: object
+      title: HyperampSchemaUpdate
+    LldGenerateSchema:
+      properties:
+        plan_id:
+          type: integer
+          title: Plan Id
+      type: object
+      required:
+      - plan_id
+      title: LldGenerateSchema
+    Status:
+      type: string
+      enum:
+      - created
+      - lld_generated
+      - access_pending
+      - access_verified
+      - mgn_started
+      title: Status
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer
