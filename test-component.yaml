@@ -3,10 +3,15 @@ kind: Component
 metadata:
   name: Test
   description: Just a repo doing test things
+  annotations:
+    github.com/project-slug: 'jsmithedin/test-repo'
+  tags:
+    - python
+    - hyperamp
 spec:
   type: service
   lifecycle: unknown
-  owner: foo
+  owner: user:guest
   providesApis:
     - test-api
 
