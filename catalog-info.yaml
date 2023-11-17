@@ -1,14 +1,9 @@
 apiVersion: backstage.io/v1alpha1
-kind: Component
+kind: Location
 metadata:
   name: Test
-  description: Just a Testi
-  annotations:
-    backstage.io/techdocs-ref: value
-    github.com/project-slug: jsmithedin/test-repo
+  description: A collection of all the stuff making up Test
 spec:
-  type: openapi
-  lifecycle: unkown
-  owner: foo
-  definition:
-    $text: https://github.com/jsmithedin/test-repo/blob/master/openapi.yaml
+  targets:
+    - ./test-component.yaml
+    - ./test-api.yaml
