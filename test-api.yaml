@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: test
+  description: A test API
+spec:
+  type: openapi
+  lifecycle: unknown
+  owner: team-a
+  definition:
+    $text: https://github.com/jsmithedin/test-repo/blob/master/openapi.yaml

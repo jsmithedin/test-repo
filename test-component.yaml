@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: Test
+  description: Just a repo doing test things
+spec:
+  type: service
+  lifecycle: unknown
+  owner: foo
+  providesApis:
+    - test-api
+
